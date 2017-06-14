@@ -21,7 +21,8 @@
 	<div class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<a href="#" class="navbar-brand">Star Wars RPG</a>
+				<img class="navbar-brand" src="assets/images/star-wars.svg">
+				<a href="#" class="navbar-brand">Admiral Ackbar Battle Simulator</a>
 			</div>
 		</div>
 	</div>
@@ -43,13 +44,16 @@
           	
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 text-center">
           <h2>ARENA</h2>
-          <div id="arena">
-          	
+          <div class="row" id="heroesArena">
+          
+          </div>
+          <div class="row" id="darksideArena">
+          
           </div>
        </div>
-        <div class="col-md-3">
+        <div class="col-md-3 text-right">
           <h2>DARKSIDE</h2>
           <div id="darkside">
           	
@@ -57,23 +61,24 @@
         </div>
         
       	<div class="row clearfix">
-	  		<div class="col-md-1">
-	      		<div class="lightsaber">
-					<label for="vader-example"></label>
-					<input type="checkbox" id="vader-example">
-					<div class="switch"></div>
-					<div class="plasma vader"></div>
-				</div>
-	      	</div>
-
-	      	<div class="col-md-10"></div>
-
-	      	<div class="col-md-1">
+	  
+	      	<div class="col-md-1 col-md-offset-2">
 	      		<div class="lightsaber">
 					<label for="yoda-example"></label>
 					<input type="checkbox" id="yoda-example">
 					<div class="switch"></div>
 					<div class="plasma obi-wan"></div>
+				</div>
+	      	</div>
+			
+			<div class="col-md-6"></div>
+
+	      	<div class="col-md-3">
+	      		<div class="lightsaber">
+					<label for="vader-example"></label>
+					<input type="checkbox" id="vader-example">
+					<div class="switch"></div>
+					<div class="plasma vader"></div>
 				</div>
 	      	</div>
       	</div>
@@ -90,6 +95,8 @@
 
 	<!-- jQuery, javascript file for the Bootstrap's javascript file to function -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="assets/js/gamelogic.js"></script>
 
 	<!-- Bootstrap's javascript file that allows the dropdown menu to work  -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
