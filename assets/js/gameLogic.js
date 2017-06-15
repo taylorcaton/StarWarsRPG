@@ -1,5 +1,5 @@
-var xwingFleet;
-var tieFighterFleet;
+var xwingFleet = [];
+var tieFighterFleet = [];
 var beginGame;
 var heroInArena;
 var darksideInArena;
@@ -12,7 +12,6 @@ function writeHeroInfo(shipNum){
 	for (var key in xwingFleet[shipNum]) {
 
 	    if (xwingFleet[shipNum].hasOwnProperty(key)) {
-	        console.log(key, xwingFleet[shipNum][key]);
 	        if(key!=="imgURL"){
 	        	$("#xwingList").append("<li>"+key.toUpperCase() + " : " + xwingFleet[shipNum][key]+"</li>")
 	        }
@@ -28,7 +27,6 @@ function writeDarksideInfo(shipNum){
 	for (var key in tieFighterFleet[shipNum]) {
 
 	    if (tieFighterFleet[shipNum].hasOwnProperty(key)) {
-	        console.log(key, tieFighterFleet[shipNum][key]);
 	        if(key!=="imgURL"){
 	        	$("#tiefighterList").append("<li>"+key.toUpperCase() + " : " + tieFighterFleet[shipNum][key]+"</li>")
 	        }
@@ -51,13 +49,23 @@ function fight(){
 
 	if(heroInArena === -1 || darksideInArena === -1) return;
 	
-	var heroFight = Math.random() * xwingFleet[heroInArena].speed;
-	var darksideFight = Math.random() * tieFighterFleet[darksideInArena].speed;
+	var heroFight = Math.floor(Math.random() * xwingFleet[heroInArena].speed);
+	var darksideFight = Math.floor(Math.random() * tieFighterFleet[darksideInArena].speed);
 
-	if (heroFight > darksideFight) {
+	if (heroFight < darksideFight) {
+
+		console.log("xwing: " + heroFight + " vs tiefighter: " + darksideFight);
+		console.log("xwing before: " + xwingFleet[heroInArena].hp);
 		xwingFleet[heroInArena].hp -= tieFighterFleet[darksideInArena].attack;
-	}else if (heroFight < darksideFight) {
+		console.log("xwing after: " + xwingFleet[heroInArena].hp);
+
+	}else if (heroFight > darksideFight) {
+
+		console.log("tiefighter: " + darksideFight + " vs xwing: " + heroFight);
+		console.log("tie-fighter before: " + tieFighterFleet[darksideInArena].hp);
 		tieFighterFleet[darksideInArena].hp -= xwingFleet[heroInArena].attack;
+		console.log("tie-fighter after: " + tieFighterFleet[darksideInArena].hp);
+
 	}else{
 		console.log("SAME VALUE");
 	}
@@ -75,12 +83,43 @@ function checkDamage(){
 	if(xwingFleet[heroInArena].hp <= 0){
 		console.log("XWING DOWN");
 		removeHeroFromArena(false);
+		checkWinner();
 	}else if (tieFighterFleet[darksideInArena].hp <= 0) {
 		console.log("TIE FIGHTER DOWN");
 		removeDarksideFromArena();
+		checkWinner();
 	}else{
 		return;
 	}
+}
+
+function checkWinner(){
+	var darksideHP = 0;
+	var heroesHP = 0;
+
+	for (var i = 0; i < xwingFleet.length; i++) {
+		heroesHP += xwingFleet[i].hp;
+	}
+
+	for (var i = 0; i < tieFighterFleet.length; i++) {
+		darksideHP += tieFighterFleet[i].hp;
+	}
+
+	if(heroesHP === 0){
+		darksideWin();
+	}else if(darksideHP === 0){
+		heroesWin();
+	}else{
+		return;
+	}
+}
+
+function darksideWin(){
+	$("#darksideArena").html("<img src='assets/images/darksideWin.gif' style='width: 100%''>");
+}
+
+function heroesWin(){
+	$("#heroesArena").html("<img src='assets/images/heroesWin.gif' style='width: 100%'>");
 }
 
 //Removes image and list from arena and adds the dead xwing back to the list
@@ -116,6 +155,20 @@ function removeDarksideFromArena(){
 
 function start(){
 
+	if(xwingFleet.length > 0){
+		
+		if(heroInArena >= 0){
+			removeHeroFromArena(false);
+		}
+
+		if (darksideInArena >= 0) {
+			removeDarksideFromArena();
+		}
+		
+		$(".xIMG").remove();
+		$(".tieIMG").remove();
+	}
+
 	beginGame = true;
 	xwingFleet = [];
 	tieFighterFleet = [];
@@ -137,7 +190,7 @@ function start(){
 			name: "Tie-Red " + i,
 			hp: 50,
 			attack: 5,
-			speed: 10,
+			speed: 25,
 			imgURL: "assets/images/tiefighter.png"
 		});
 	}
@@ -152,6 +205,8 @@ function start(){
 		$("#darkside").append("<div class='tieIMG' id='tiefighterDIV" + i + "'>");
 		$("#tiefighterDIV" + i).append("<img src='"+tieFighterFleet[i].imgURL+"' id='tiefighter"+ i + "'>");
 	}
+
+	return;
 }
 
 start();

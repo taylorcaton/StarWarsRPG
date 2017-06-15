@@ -1,5 +1,5 @@
-//Document Ready
-$(document).ready(function() {
+// // //Document Ready
+// $(document).ready(function() {
 
 
 	//When X-Wing 0 is clicked, remove it and place it in the arena.
@@ -65,4 +65,4 @@ $(document).ready(function() {
 		writeDarksideInfo(5);
 	});
 
-});
+// });
