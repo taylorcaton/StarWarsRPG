@@ -4,18 +4,56 @@ body{
 	background-image: url("../images/background.png");
     background-size: 100% 100%;
     /*background-position: right top;*/
-    background-attachment: fixed;
-    
+    background-attachment: fixed;   
 }
 
-h1, h2, p{
+#darksideArena{
+	background-image: url("../images/darksideBackground.jpg");
+	border: 2px solid #CE0C2C;
+  	border-radius: 3px;
+  	box-shadow: inset 0 1px 3px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.075);
+}
+
+#heroesArena{
+	background-image: url("../images/darksideBackground.jpg");
+	margin-bottom: 15px;
+	border: 2px solid #2719C7;
+  	border-radius: 3px;
+  	box-shadow: inset 0 1px 3px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.075);
+}
+
+#darksideArena ul, #heroesArena ul {
+	margin-top: 15px;
+}
+
+h1, h2, p, li, .displayHP{
 	color: #ffd700;
 }
 
 h1, .navbar-brand{
-	font-family: 'Audiowide', cursive;	
+	font-family: 'Orbitron', sans-serif;	
 }
 
-h2, p{
+h2, p, li, button, .displayHP{
 	font-family: 'Press Start 2P', cursive;
+}
+
+.btn{
+	margin-bottom: 5px;
+}
+
+.tieIMG, .xIMG{
+	display: inline;
+}
+
+.heroesArenaContent img p{
+	display: inline;
+}
+
+.tieIMG img, .xIMG img{
+	width: 100px;
+}
+
+.jumbotron{
+	padding-bottom: 0px;
 }

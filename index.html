@@ -14,7 +14,7 @@
 	<!--Extra Styles-->
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/lightsabers.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Audiowide|Press+Start+2P" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Orbitron|Press+Start+2P" rel="stylesheet">
 
 </head>
 <body>
@@ -28,68 +28,90 @@
 	</div>
 
 	<!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container text-center">
-        <p><a class="btn btn-danger btn-lg" href="#" role="button">ATTACK!</a></p>
-      </div>
-    </div>
+	<div class="jumbotron bg-faded">
+		<div class="container text-center">
+			<button class="btn btn-success btn-lg" onclick="start()" role="button">START</button>
+			<button class="btn btn-danger btn-lg" onclick="fight()" role="button">ATTACK!</button>
+			<button class="btn btn-warning btn-lg" onclick="removeHeroFromArena(true)" role="button">RETREAT!</button>
+			<button class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-music"></span></button>
+		</div>
+	</div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-      	
-        <div class="col-md-3">
-          <h2>Heroes</h2>
-          <div id="heroes">
-          	
-          </div>
-        </div>
-        <div class="col-md-6 text-center">
-          <h2>ARENA</h2>
-          <div class="row" id="heroesArena">
-          
-          </div>
-          <div class="row" id="darksideArena">
-          
-          </div>
-       </div>
-        <div class="col-md-3 text-right">
-          <h2>DARKSIDE</h2>
-          <div id="darkside">
-          	
-          </div>
-        </div>
-        
-      	<div class="row clearfix">
-	  
-	      	<div class="col-md-1 col-md-offset-2">
-	      		<div class="lightsaber">
+	<div class="container">
+		<!-- Example row of columns -->
+		<div class="row">
+
+			<div class="col-md-3">
+				<h2>Heroes</h2>
+				<div id="heroes" class="img-fluid">
+
+				</div>
+			</div>
+			<div class="col-md-6 text-center">
+				<h2>ARENA</h2>
+				<div class="row" id="heroesArena">
+					<div class="col-md-4" id="xwingImage" class="img-fluid pull-left">
+						
+					</div>
+					<div class="col-md-8 pull-left text-left" id="xwingContent">
+						
+					</div>
+				</div>
+				<div class="row" id="darksideArena">
+					<div class="col-md-8 pull-left text-left" id="tiefighterContent">
+						
+					</div>
+					<div class="col-md-4 img-fluid pull-right" id="tiefighterImage">
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 text-right">
+				<h2>Darkside</h2>
+				<div id="darkside" class="img-fluid">
+
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<!--
+		<div class="row clearfix">
+
+			<div class="col-md-1 col-md-offset-2">
+				<div class="lightsaber text-right">
 					<label for="yoda-example"></label>
 					<input type="checkbox" id="yoda-example">
 					<div class="switch"></div>
 					<div class="plasma obi-wan"></div>
 				</div>
-	      	</div>
+			</div>
 			
 			<div class="col-md-6"></div>
 
-	      	<div class="col-md-3">
-	      		<div class="lightsaber">
+			<div class="col-md-3">
+				<div class="lightsaber text-left">
 					<label for="vader-example"></label>
 					<input type="checkbox" id="vader-example">
 					<div class="switch"></div>
 					<div class="plasma vader"></div>
 				</div>
-	      	</div>
-      	</div>
-      </div>
+			</div>
+		</div>
+ -->
+		<hr>
 
-      <hr>
+		<div class="row clearfix">
+			<footer>
+				<p>&copy; Taylor Caton 2017</p>
+			</footer>
 
-      <footer>
-        <p>&copy; Taylor Caton 2017</p>
-      </footer>
-    </div> <!-- /container -->
+		</div>
+
+
+	</div> <!-- /container -->
 
 	<!--SCRIPTS-->
 
@@ -97,7 +119,8 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
 
 	<script type="text/javascript" src="assets/js/gamelogic.js"></script>
-
+	<script type="text/javascript" src="assets/js/listeners.js"></script>
+	
 	<!-- Bootstrap's javascript file that allows the dropdown menu to work  -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
