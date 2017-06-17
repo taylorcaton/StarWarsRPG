@@ -3,6 +3,7 @@ var tieFighterFleet = [];
 var beginGame;
 var heroInArena;
 var darksideInArena;
+var starDestroyerAlive;
 
 function writeHeroInfo(shipNum){
 
@@ -47,7 +48,7 @@ function transferToArena(shipType, shipNum){
 		$("#xwingImage").html("<img src='"+xwingFleet[shipNum].imgURL+"' id='xwing"+ shipNum + "' class='heroesArenaContent'>");
 	}else{
 		$("#tiefighterDIV"+shipNum).remove();
-		$("#tiefighterImage").html("<img src='"+tieFighterFleet[shipNum].imgURL+"' id='tiefighter"+ shipNum + "' class='darksideArenaContent'>");
+		$("#tiefighterImage").html("<img src='"+tieFighterFleet[shipNum].imgURL+"' id='tiefighter"+ shipNum + "' class='darksideArenaContent img-responsive'>");
 	}
 }
 
@@ -116,11 +117,14 @@ function checkWinner(){
 		darksideHP += tieFighterFleet[i].hp;
 	}
 
-	if(heroesHP === 0){
+	if(starDestroyerAlive && darksideHP <= 0) heroesWin();
+
+	if(heroesHP <= 0){
 		darksideWin();
-	}else if(darksideHP === 0){
+	}else if(darksideHP <= 0){
 		//heroesWin();
 		starDestroyer();
+		starDestroyerAlive = true;
 	}else{
 		return;
 	}
@@ -176,9 +180,9 @@ function removeDarksideFromArena(){
 }
 
 //place StarDestroyer in arena
-function starDestroyer{
-	var tieFighterFleet.push({
-		name: "STAR DESTROYER",
+function starDestroyer(){
+	tieFighterFleet.push({
+		name: "Star Destroyer Adamant",
 		hp: 200,
 		attack: 20,
 		speed: 5,
