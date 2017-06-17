@@ -22,6 +22,7 @@ body{
   	box-shadow: inset 0 1px 3px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.075);
 }
 
+
 #darksideArena ul, #heroesArena ul {
 	margin-top: 15px;
 }
@@ -42,8 +43,12 @@ h2, p, li, button, .displayHP{
 	margin-bottom: 5px;
 }
 
-.tieIMG, .xIMG{
+.tieIMG{
 	display: inline;
+}
+
+.xIMG{
+	display: block;
 }
 
 .heroesArenaContent img p{

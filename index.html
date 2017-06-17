@@ -32,7 +32,7 @@
 		<div class="container text-center">
 			<button class="btn btn-danger btn-lg" onclick="fight()" role="button">ATTACK!</button>
 			<button class="btn btn-warning btn-lg" onclick="removeHeroFromArena(true)" role="button">RETREAT!</button>
-			<button class="btn btn-primary btn-lg" role="button"><i class="fa fa-music" aria-hidden="true"></i></button>
+			<button class="btn btn-primary btn-lg" onclick="musicControl()" role="button"><i class="fa fa-volume-up" id="musicBtn" aria-hidden="true"></i></button>
 		</div>
 	</div>
 
@@ -42,7 +42,7 @@
 
 			<div class="col-md-3">
 				<h2>Heroes</h2>
-				<div id="heroes" class="img-fluid">
+				<div id="heroes" class="img-fluid d-inline">
 
 				</div>
 			</div>
@@ -115,8 +115,13 @@
 	<!--SCRIPTS-->
 
 	<!-- jQuery, javascript file for the Bootstrap's javascript file to function -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+	<script
+  		src="https://code.jquery.com/jquery-3.2.1.min.js"
+  		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  		crossorigin="anonymous">
+  	</script>
 
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.4/howler.min.js"></script>
 	<script type="text/javascript" src="assets/js/gamelogic.js"></script>
 	<script type="text/javascript" src="assets/js/listeners.js"></script>
 	

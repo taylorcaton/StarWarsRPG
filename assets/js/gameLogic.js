@@ -6,6 +6,8 @@ var darksideInArena;
 
 function writeHeroInfo(shipNum){
 
+	$("#xwingList").empty();
+
 	heroInArena = shipNum;
 	$("#xwingContent").append("<ul class='heroesArenaContent' id='xwingList'>");
 
@@ -19,7 +21,10 @@ function writeHeroInfo(shipNum){
 	}	    
 }
 
+//Writes the info to the darkside arena
 function writeDarksideInfo(shipNum){
+
+	$("#tiefighterList").empty();
 
 	darksideInArena = shipNum;
 	$("#tiefighterContent").append("<ul class='darksideArenaContent' id='tiefighterList'>");
@@ -34,6 +39,7 @@ function writeDarksideInfo(shipNum){
 	}   
 }
 
+//Transfers the selected ship to the arena (This was implemented before I learned .attr)
 function transferToArena(shipType, shipNum){
 
 	if(shipType==="xwing"){
@@ -45,6 +51,7 @@ function transferToArena(shipType, shipNum){
 	}
 }
 
+//Triggered by the attack button, the speed determines the highest possible random number
 function fight(){
 
 	if(heroInArena === -1 || darksideInArena === -1) return;
@@ -58,6 +65,7 @@ function fight(){
 		console.log("xwing before: " + xwingFleet[heroInArena].hp);
 		xwingFleet[heroInArena].hp -= tieFighterFleet[darksideInArena].attack;
 		console.log("xwing after: " + xwingFleet[heroInArena].hp);
+		tieFire.play();
 
 	}else if (heroFight > darksideFight) {
 
@@ -65,6 +73,7 @@ function fight(){
 		console.log("tie-fighter before: " + tieFighterFleet[darksideInArena].hp);
 		tieFighterFleet[darksideInArena].hp -= xwingFleet[heroInArena].attack;
 		console.log("tie-fighter after: " + tieFighterFleet[darksideInArena].hp);
+		xwingFire.play();
 
 	}else{
 		console.log("SAME VALUE");
@@ -79,6 +88,7 @@ function fight(){
 	checkDamage()
 }
 
+//Check to see if one of the ships in the arena has 0 hp and removes it
 function checkDamage(){
 	if(xwingFleet[heroInArena].hp <= 0){
 		console.log("XWING DOWN");
@@ -93,6 +103,7 @@ function checkDamage(){
 	}
 }
 
+//Check to see if one of the fleets is out of HP
 function checkWinner(){
 	var darksideHP = 0;
 	var heroesHP = 0;
@@ -108,17 +119,22 @@ function checkWinner(){
 	if(heroesHP === 0){
 		darksideWin();
 	}else if(darksideHP === 0){
-		heroesWin();
+		//heroesWin();
+		starDestroyer();
 	}else{
 		return;
 	}
 }
 
+//Shows a win gif
 function darksideWin(){
 	$("#darksideArena").html("<img src='assets/images/darksideWin.gif' style='width: 100%''>");
 }
 
+//Shows a win gif
 function heroesWin(){
+	music.stop();
+	win.play();
 	$("#heroesArena").html("<img src='assets/images/heroesWin.gif' style='width: 100%'>");
 }
 
@@ -126,30 +142,51 @@ function heroesWin(){
 function removeHeroFromArena(retreat){
 	$(".heroesArenaContent").remove();
 
-	if(retreat){
+	if(retreat && heroInArena != -1){
 		var tempHP = xwingFleet[heroInArena].hp;
 		var tempNum = heroInArena;
 		$("#heroes").append("<div class='xIMG' id='xwingDIV" + heroInArena + "'>");
 		$("#xwingDIV" + heroInArena).append("<img src='"+xwingFleet[heroInArena].imgURL+"' id='xwing"+ heroInArena + "'>");
-		$("#xwingDIV"+tempNum).append("<div class='displayHP'>"+tempHP+"</div>")
-	}else{
+		$("#xwingDIV"+tempNum).append("<div class='displayHP'>"+tempHP+"</div>");
+		xwingFire.stop();
+		retreatSound.play();
+	}else if(heroInArena != -1){
 		xwingFleet[heroInArena].imgURL = "assets/images/xwingDead.png";
 		$("#heroes").append("<div class='xIMG' id='xwingDIV" + heroInArena + "'>");
 		$("#xwingDIV" + heroInArena).append("<img src='"+xwingFleet[heroInArena].imgURL+"' id='xwing"+ heroInArena + "'>");
-	}
-		
+		xwingFire.stop();
+		explode.play();
+	}else{
+		return;
+	}	
 	
-	heroInArena = -1;
+	heroInArena = -1;	
 }
 
 //Removes image and list from arena and adds the dead tiefighter back to the list
 function removeDarksideFromArena(){
+	tieFire.stop();
+	explode.play();
 	$(".darksideArenaContent").remove();
 	tieFighterFleet[darksideInArena].imgURL = "assets/images/tiefighterDead.png"
 	
 	$("#darkside").append("<div class='tieIMG' id='tiefighterDIV" + darksideInArena + "'>");
 	$("#tiefighterDIV" + darksideInArena).append("<img src='"+tieFighterFleet[darksideInArena].imgURL+"' id='tiefighter"+ darksideInArena + "'>");
 	darksideInArena = -1
+}
+
+//place StarDestroyer in arena
+function starDestroyer{
+	var tieFighterFleet.push({
+		name: "STAR DESTROYER",
+		hp: 200,
+		attack: 20,
+		speed: 5,
+		imgURL: "assets/images/starDestroyer.png"
+	});
+
+	transferToArena("starDestroyer", tieFighterFleet.length-1);
+	writeDarksideInfo(tieFighterFleet.length-1);
 }
 
 
@@ -179,7 +216,7 @@ function start(){
 			name: "X-Blue " + i,
 			hp: 100,
 			attack: 10,
-			speed: 7,
+			speed: 10,
 			imgURL: "assets/images/xwing.png"
 		});
 	}
@@ -190,7 +227,7 @@ function start(){
 			name: "Tie-Red " + i,
 			hp: 50,
 			attack: 5,
-			speed: 25,
+			speed: 12,
 			imgURL: "assets/images/tiefighter.png"
 		});
 	}
@@ -209,4 +246,71 @@ function start(){
 	return;
 }
 
+//Starts the game on load
 start();
+
+//Game Music and sfx
+var music = new Howl({
+    src: ['assets/music/battleMusic.mp3'],
+    ext: ['mp3'],
+    autoplay: true,
+    html5: true,
+    loop: true
+});
+
+var r2d2 = new Howl({
+  src: ['assets/music/R2D2.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var tie = new Howl({
+  src: ['assets/music/tie.wav'],
+  ext: ['wav'],
+  html5: true
+});
+
+var explode = new Howl({
+  src: ['assets/music/explode.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var retreatSound = new Howl({
+  src: ['assets/music/retreat.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var tieFire = new Howl({
+  src: ['assets/music/tieFire.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var xwingFire = new Howl({
+  src: ['assets/music/xwingFire.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var win = new Howl({
+  src: ['assets/music/heroesWin.mp3'],
+  ext: ['mp3'],
+  html5: true
+});
+
+var play = true;
+function musicControl(){
+	if(play){
+		music.pause();
+		Howler.mute(true);
+		$("#musicBtn").attr("class", "fa fa-volume-off")
+	}else{
+		Howler.mute(false);
+		music.play();
+		$("#musicBtn").attr("class", "fa fa-volume-up")
+	}
+	play = !play;
+}
+
