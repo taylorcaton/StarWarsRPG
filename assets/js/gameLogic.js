@@ -19,7 +19,9 @@ function writeHeroInfo(shipNum){
 	        	$("#xwingList").append("<li>"+key.toUpperCase() + " : " + xwingFleet[shipNum][key]+"</li>")
 	        }
 	    }
-	}	    
+	}
+
+	footerTalk(1); //Tell the user to select a tie fighter.	    
 }
 
 //Writes the info to the darkside arena
@@ -37,7 +39,9 @@ function writeDarksideInfo(shipNum){
 	        	$("#tiefighterList").append("<li>"+key.toUpperCase() + " : " + tieFighterFleet[shipNum][key]+"</li>")
 	        }
 	    }
-	}   
+	}
+
+	footerTalk(9);   
 }
 
 //Transfers the selected ship to the arena (This was implemented before I learned .attr)
@@ -62,19 +66,17 @@ function fight(){
 
 	if (heroFight < darksideFight) {
 
-		console.log("xwing: " + heroFight + " vs tiefighter: " + darksideFight);
-		console.log("xwing before: " + xwingFleet[heroInArena].hp);
+		footerTalk(2); //STAY ON TARGET
 		xwingFleet[heroInArena].hp -= tieFighterFleet[darksideInArena].attack;
-		console.log("xwing after: " + xwingFleet[heroInArena].hp);
 		tieFire.play();
+		
 
 	}else if (heroFight > darksideFight) {
 
-		console.log("tiefighter: " + darksideFight + " vs xwing: " + heroFight);
-		console.log("tie-fighter before: " + tieFighterFleet[darksideInArena].hp);
+		footerTalk(3); //Clearly you have the high ground.
 		tieFighterFleet[darksideInArena].hp -= xwingFleet[heroInArena].attack;
-		console.log("tie-fighter after: " + tieFighterFleet[darksideInArena].hp);
 		xwingFire.play();
+		
 
 	}else{
 		console.log("SAME VALUE");
@@ -86,7 +88,7 @@ function fight(){
 	$("#tiefighterList").remove();
 	writeDarksideInfo(darksideInArena);
 
-	checkDamage()
+	checkDamage();
 }
 
 //Check to see if one of the ships in the arena has 0 hp and removes it
@@ -94,10 +96,12 @@ function checkDamage(){
 	if(xwingFleet[heroInArena].hp <= 0){
 		console.log("XWING DOWN");
 		removeHeroFromArena(false);
+		footerTalk(5);
 		checkWinner();
 	}else if (tieFighterFleet[darksideInArena].hp <= 0) {
 		console.log("TIE FIGHTER DOWN");
 		removeDarksideFromArena();
+		footerTalk(4);
 		checkWinner();
 	}else{
 		return;
@@ -117,12 +121,18 @@ function checkWinner(){
 		darksideHP += tieFighterFleet[i].hp;
 	}
 
-	if(starDestroyerAlive && darksideHP <= 0) heroesWin();
+	if(starDestroyerAlive && darksideHP <= 0){
+		explode.play();
+		$(".darksideArenaContent").remove();
+		heroesWin();
+		beginGame = false;
+		return;
+		
+	}
 
 	if(heroesHP <= 0){
 		darksideWin();
 	}else if(darksideHP <= 0){
-		//heroesWin();
 		starDestroyer();
 		starDestroyerAlive = true;
 	}else{
@@ -133,12 +143,14 @@ function checkWinner(){
 //Shows a win gif
 function darksideWin(){
 	$("#darksideArena").html("<img src='assets/images/darksideWin.gif' style='width: 100%''>");
+	footerTalk(8);
 }
 
 //Shows a win gif
 function heroesWin(){
 	music.stop();
 	win.play();
+	footerTalk(7);
 	$("#heroesArena").html("<img src='assets/images/heroesWin.gif' style='width: 100%'>");
 }
 
@@ -181,6 +193,7 @@ function removeDarksideFromArena(){
 
 //place StarDestroyer in arena
 function starDestroyer(){
+	footerTalk(6);
 	tieFighterFleet.push({
 		name: "Star Destroyer Adamant",
 		hp: 200,
@@ -214,6 +227,7 @@ function start(){
 	xwingFleet = [];
 	tieFighterFleet = [];
 	heroInArena = -1;
+	darksideInArena = -1;
 
 	//Setup x-wing fleet
 	for(var i=0; i<3; i++){
@@ -231,8 +245,8 @@ function start(){
 		tieFighterFleet.push({
 			name: "Tie-Red " + i,
 			hp: 50,
-			attack: 5,
-			speed: 12,
+			attack: 2,
+			speed: 13,
 			imgURL: "assets/images/tiefighter.png"
 		});
 	}
@@ -247,6 +261,8 @@ function start(){
 		$("#darkside").append("<div class='tieIMG' id='tiefighterDIV" + i + "'>");
 		$("#tiefighterDIV" + i).append("<img src='"+tieFighterFleet[i].imgURL+"' id='tiefighter"+ i + "'>");
 	}
+
+	footerTalk(0); //Game Dialogue
 
 	return;
 }
@@ -319,3 +335,24 @@ function musicControl(){
 	play = !play;
 }
 
+function footerTalk(scene){
+
+	var str = "";
+
+	switch(scene){
+		case 0: str = "Welcome Cadet! To start, choose your X-Wing."; break;
+		case 1: str = "Choose your Tie-Fighter opponent."; break;
+		case 2: str = "Stay on target!"; break;
+		case 3: str = "Clearly you have the high ground."; break;
+		case 4: str = "Nice shooting!"; break;
+		case 5: str = "\"I can't shake em' AHHHHHHHHHH\""; break;
+		case 6: str = "A Star Destroyer! They're slow but powerful!"; break;
+		case 7: str = "\"Great shot kid! That was one in a million!\""; break;
+		case 8: str = "Way to go. Ya blew it."; break;
+		case 9: str = "Attack!"; break;
+		default: break;
+	}
+
+	$("#footerTalk").text(str);
+
+}
