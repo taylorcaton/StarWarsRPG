@@ -213,6 +213,7 @@ function start(){
 	beginGame = true;
 	xwingFleet = [];
 	tieFighterFleet = [];
+	heroInArena = -1;
 
 	//Setup x-wing fleet
 	for(var i=0; i<3; i++){
