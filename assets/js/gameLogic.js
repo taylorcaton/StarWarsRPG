@@ -132,6 +132,7 @@ function checkWinner(){
 
 	if(heroesHP <= 0){
 		darksideWin();
+		beginGame = false;
 	}else if(darksideHP <= 0){
 		starDestroyer();
 		starDestroyerAlive = true;
