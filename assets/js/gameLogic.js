@@ -207,7 +207,7 @@ function starDestroyer(){
 	writeDarksideInfo(tieFighterFleet.length-1);
 }
 
-
+//Game Setup
 function start(){
 
 	if(xwingFleet.length > 0){
@@ -271,7 +271,7 @@ function start(){
 //Starts the game on load
 start();
 
-//Game Music and sfx
+//Game Music and sfx uses the howler.js library
 var music = new Howl({
     src: ['assets/music/battleMusic.mp3'],
     ext: ['mp3'],
@@ -336,6 +336,8 @@ function musicControl(){
 	play = !play;
 }
 
+
+//Text that shows up at the bottom of the page.
 function footerTalk(scene){
 
 	var str = "";
